@@ -458,6 +458,17 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 .anjos-steps button:hover::before { background-color: var(--sun); transform: scale(1.1); }
 .anjos-steps span { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; color: var(--sun); letter-spacing: .06em; }
 .anjos-steps strong { font-weight: 600; font-size: .92rem; line-height: 1.3; }
+@media (min-width: 901px) {
+  .anjos-steps:has(li:nth-child(5)) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .35rem;
+  }
+  .anjos-steps:has(li:nth-child(5))::before { top: 16px; }
+  .anjos-steps:has(li:nth-child(5)) button { gap: .35rem; }
+  .anjos-steps:has(li:nth-child(5)) button::before { width: 32px; height: 32px; background-size: 16px; }
+  .anjos-steps:has(li:nth-child(5)) span { font-size: .75rem; letter-spacing: .04em; }
+  .anjos-steps:has(li:nth-child(5)) strong { font-size: .78rem; }
+}
 @media (max-width: 900px) {
   .anjos { grid-template-columns: 1fr; }
   .anjos-steps { grid-template-columns: 1fr 1fr; row-gap: 1.4rem; }
