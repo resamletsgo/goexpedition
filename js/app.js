@@ -1,5 +1,3 @@
-import { VIDEOS, FILTERS, TAG_RULES, INSTAGRAM_PROFILES, INSTAGRAM_POSTS } from './data.js'
-
 const $ = (sel, root = document) => root.querySelector(sel)
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)]
 
