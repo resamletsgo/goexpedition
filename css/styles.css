@@ -181,7 +181,7 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 }
 .hero-topo, .midia-topo {
   position: absolute; inset: 0; pointer-events: none;
-  -webkit-mask: url(/img/topo.svg) center / cover no-repeat; mask: url(/img/topo.svg) center / cover no-repeat;
+  -webkit-mask: url(../img/topo.svg) center / cover no-repeat; mask: url(../img/topo.svg) center / cover no-repeat;
 }
 .hero-topo { background: var(--moss); opacity: .28; }
 .hero-copy { grid-column: 1 / span 7; position: relative; z-index: 2; }
