@@ -151,12 +151,18 @@ const cleanTitle = (t) =>
 
 async function syncLatest() {
   try {
-    const res = await fetch('/api/videos', { headers: { accept: 'application/json' } })
+    const res = await fetch('api/videos.json', { cache: 'no-cache', headers: { accept: 'application/json' } })
     if (!res.ok) throw new Error(String(res.status))
     const data = await res.json()
-    const known = new Set(videos.map((v) => v.id))
-    const fresh = (data.videos || [])
-      .filter((v) => !known.has(v.id))
+    const feed = data.videos || []
+    const byId = new Map(videos.map((v) => [v.id, v]))
+    // Vídeos do acervo sem data ganham a data do feed, para a ordenação ficar correta
+    feed.forEach((f) => {
+      const v = byId.get(f.id)
+      if (v && !v.date) v.date = f.published
+    })
+    const fresh = feed
+      .filter((v) => !byId.has(v.id))
       .map((v) => ({
         id: v.id,
         title: cleanTitle(v.title),
@@ -167,12 +173,11 @@ async function syncLatest() {
           return tags.length ? tags : ['trilhas']
         })(),
       }))
-    if (fresh.length) {
-      videos = [...fresh, ...videos]
-      const playing = !!$('iframe', player)
-      if (!playing) selectVideo(videos[0])
-      renderPlaylist()
-    }
+    // Mais recente primeiro; vídeos sem data (acervo antigo) ficam no fim, na ordem original
+    videos = [...fresh, ...videos].sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+    const playing = !!$('iframe', player)
+    if (!playing) selectVideo(videos[0])
+    renderPlaylist()
     sync.dataset.state = 'ok'
     sync.querySelector('b').textContent = fresh.length ? `${fresh.length} novo${fresh.length > 1 ? 's' : ''}` : 'atualizado'
   } catch {

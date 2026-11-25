@@ -247,12 +247,12 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
   display: grid; gap: 1.1rem;
   grid-template-columns: repeat(6, 1fr);
   grid-template-areas:
-    'a a a b b b'
-    'a a a b b b'
+    'a a b b f f'
+    'a a b b f f'
     'c c d d e e';
   grid-auto-rows: minmax(230px, auto);
 }
-.xp-card--a { grid-area: a; } .xp-card--b { grid-area: b; margin-top: 3rem; } .xp-card--c { grid-area: c; } .xp-card--d { grid-area: d; } .xp-card--e { grid-area: e; }
+.xp-card--a { grid-area: a; } .xp-card--b { grid-area: b; } .xp-card--c { grid-area: c; } .xp-card--d { grid-area: d; } .xp-card--e { grid-area: e; } .xp-card--f { grid-area: f; }
 .xp-card {
   position: relative; overflow: hidden; border-radius: var(--radius); border: 0; padding: 0; text-align: left;
   background: var(--ink); color: var(--paper); text-decoration: none; min-height: 260px;
@@ -275,10 +275,18 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 }
 .xp-card:hover::before, .xp-card:focus-visible::before { transform: scale(1) rotate(0); }
 @media (max-width: 860px) {
-  .xp-grid { grid-template-columns: 1fr 1fr; grid-template-areas: 'a a' 'b b' 'c d' 'e e'; }
-  .xp-card--b { margin-top: 0; }
+  .xp-grid { grid-template-columns: 1fr 1fr; grid-template-areas: 'a a' 'b f' 'c d' 'e e'; }
 }
-@media (max-width: 560px) { .xp-grid { grid-template-columns: 1fr; grid-template-areas: 'a' 'b' 'c' 'd' 'e'; } }
+@media (max-width: 560px) { .xp-grid { grid-template-columns: 1fr; grid-template-areas: 'a' 'b' 'f' 'c' 'd' 'e'; } }
+
+/* Chamada da Cicloviagem */
+.ciclo-cta {
+  grid-column: 1 / -1; margin-top: 1.6rem; padding: 1.3rem 1.5rem; border-radius: var(--radius);
+  background: var(--sun); color: var(--ink);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem;
+}
+.ciclo-cta p { margin: 0; flex: 1 1 32ch; font-size: 1.05rem; line-height: 1.5; }
+.ciclo-cta .btn { flex: none; }
 
 /* ---------- Mídia ---------- */
 .midia { background: var(--ink); color: var(--paper); overflow: hidden; }

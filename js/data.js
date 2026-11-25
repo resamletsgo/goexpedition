@@ -1,5 +1,6 @@
 // Conteúdo editável do site — vídeos em destaque, filtros e perfis do Instagram.
-// A lista abaixo é o acervo base; /api/videos acrescenta automaticamente os lançamentos mais recentes do canal.
+// A lista abaixo é o acervo base; api/videos.json (gerado a cada 3h pela GitHub Action update-videos)
+// acrescenta os lançamentos mais recentes do canal, e o player abre sempre no vídeo mais novo.
 
 const CHANNEL = {
   youtube: 'https://www.youtube.com/@letsgowithme',
