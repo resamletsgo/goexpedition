@@ -1,5 +1,3 @@
-import { VIDEOS, FILTERS, TAG_RULES, INSTAGRAM_PROFILES, INSTAGRAM_POSTS } from './data.js'
-
 const $ = (sel, root = document) => root.querySelector(sel)
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)]
 
@@ -139,7 +137,7 @@ document.addEventListener('click', (e) => {
   if (!b) return
   const v = videos.find((x) => x.id === b.dataset.play) || { id: b.dataset.play, title: b.textContent.trim(), tags: [] }
   selectVideo(v, { autoplay: true })
-  $('#midia').scrollIntoView({ behavior: 'smooth' })
+  $('#player').scrollIntoView({ behavior: 'smooth', block: 'center' })
 })
 
 const cleanTitle = (t) =>

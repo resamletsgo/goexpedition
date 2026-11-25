@@ -1,7 +1,7 @@
 // Conteúdo editável do site — vídeos em destaque, filtros e perfis do Instagram.
 // A lista abaixo é o acervo base; /api/videos acrescenta automaticamente os lançamentos mais recentes do canal.
 
-export const CHANNEL = {
+const CHANNEL = {
   youtube: 'https://www.youtube.com/@letsgowithme',
   subscribe: 'https://www.youtube.com/@letsgowithme?sub_confirmation=1',
   instagram: 'https://www.instagram.com/letsgowithmebr/',
@@ -9,7 +9,7 @@ export const CHANNEL = {
   email: 'letsgowithmebr@outlook.com',
 }
 
-export const FILTERS = [
+const FILTERS = [
   { id: 'todos', label: 'Todos' },
   { id: 'trilhas', label: 'MTB & trilhas' },
   { id: 'viagens', label: 'Cicloviagens' },
@@ -18,7 +18,7 @@ export const FILTERS = [
   { id: 'eventos', label: 'Eventos & parks' },
 ]
 
-export const VIDEOS = [
+const VIDEOS = [
   { id: 'B6KpmEbeV0o', title: 'Sufoco na trilha! A trilha do Jacaré está insana', date: '2026-11-17', tags: ['trilhas', 'grandevolta'] },
   { id: 'Uhhc4iy-irc', title: 'Nas trilhas com a galera', date: '2026-11-10', tags: ['trilhas', 'grandevolta'] },
   { id: 't-TNM5OWCUE', title: 'Treino de aniversário do Gabriel', date: '2026-11-06', tags: ['trilhas'] },
@@ -48,14 +48,14 @@ export const VIDEOS = [
 ]
 
 // Regras para classificar vídeos novos que chegam pelo feed do canal.
-export const TAG_RULES = [
+const TAG_RULES = [
   { tag: 'grandevolta', re: /grande volta|jacar[eé]/i },
   { tag: 'cangalha', re: /caminho dos anjos|cangalha/i },
   { tag: 'viagens', re: /caminho|viagem|rota|serra|gravel|tour/i },
   { tag: 'eventos', re: /wtr|park|evento|desafio/i },
 ]
 
-export const INSTAGRAM_PROFILES = [
+const INSTAGRAM_PROFILES = [
   {
     handle: 'letsgowithmebr',
     name: "Let's Go with me",
@@ -75,7 +75,7 @@ export const INSTAGRAM_PROFILES = [
 
 // Para fixar posts específicos abaixo do perfil, cole aqui os links dos posts/reels.
 // Ex.: 'https://www.instagram.com/p/XXXXXXXXXXX/'
-export const INSTAGRAM_POSTS = {
+const INSTAGRAM_POSTS = {
   letsgowithmebr: [],
   ciclocangalha: [],
   agrandevolta: [],
