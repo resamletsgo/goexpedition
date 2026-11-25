@@ -137,7 +137,9 @@ document.addEventListener('click', (e) => {
   if (!b) return
   const v = videos.find((x) => x.id === b.dataset.play) || { id: b.dataset.play, title: b.textContent.trim(), tags: [] }
   selectVideo(v, { autoplay: true })
-  $('#player').scrollIntoView({ behavior: 'smooth', block: 'center' })
+  const label = $('#midia .yt .panel-label')
+  const header = $('.site-header')?.offsetHeight || 80
+  window.scrollTo({ top: label.getBoundingClientRect().top + window.scrollY - header - 12, behavior: 'smooth' })
 })
 
 const cleanTitle = (t) =>
