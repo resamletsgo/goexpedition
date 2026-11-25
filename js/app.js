@@ -137,7 +137,7 @@ document.addEventListener('click', (e) => {
   if (!b) return
   const v = videos.find((x) => x.id === b.dataset.play) || { id: b.dataset.play, title: b.textContent.trim(), tags: [] }
   selectVideo(v, { autoplay: true })
-  $('#midia').scrollIntoView({ behavior: 'smooth' })
+  $('#player').scrollIntoView({ behavior: 'smooth', block: 'center' })
 })
 
 const cleanTitle = (t) =>
