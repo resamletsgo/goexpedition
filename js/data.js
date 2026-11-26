@@ -56,6 +56,21 @@ const TAG_RULES = [
   { tag: 'eventos', re: /wtr|park|evento|desafio/i },
 ]
 
+// Local exibido no player: o primeiro padrão que bater no título/descrição do vídeo.
+// Para corrigir um vídeo específico, adicione `place: '...'` (e/ou `summary: '...'`) no item de VIDEOS.
+const PLACES = [
+  { re: /vale das videiras/i, label: 'Vale das Videiras, Petrópolis (RJ)' },
+  { re: /petr[oó]polis/i, label: 'Petrópolis (RJ)' },
+  { re: /po[cç]os de caldas|rota vulc[aâ]nica/i, label: 'Poços de Caldas (MG)' },
+  { re: /pedro teixeira/i, label: 'Pedro Teixeira (MG)' },
+  { re: /tr[eê]s ilhas/i, label: 'São José das Três Ilhas (MG)' },
+  { re: /serra do papagaio/i, label: 'Serra do Papagaio (MG)' },
+  { re: /aiuruoca|cangalha/i, label: 'Aiuruoca (MG)' },
+  { re: /caminho dos anjos/i, label: 'Caminho dos Anjos (MG)' },
+  { re: /caminho da f[eé]/i, label: 'Caminho da Fé' },
+  { re: /grande volta|jacar[eé]/i, label: 'Trilhas da Grande Volta' },
+]
+
 const INSTAGRAM_PROFILES = [
   {
     handle: 'letsgowithmebr',

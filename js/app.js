@@ -54,6 +54,10 @@ let current = videos[0]
 const player = $('#player')
 const playerTitle = $('#playerTitle')
 const playerDate = $('#playerDate')
+const playerPlace = $('#playerPlace')
+const playerSummary = $('#playerSummary')
+const playerLike = $('#playerLike')
+const playerShare = $('#playerShare')
 const playlist = $('#playlist')
 const chips = $('#chips')
 const sync = $('#ytSync')
@@ -75,10 +79,63 @@ function playInline(video) {
     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
 }
 
+const watchUrl = (id) => `https://www.youtube.com/watch?v=${id}`
+
+// Resumo = parágrafos da descrição antes do texto padrão do canal (apoio, links, parceiros)
+const BOILERPLATE = /^\s*(seja membro|quer ajudar|d[eê] seu apoio|acesse|voc[eê] pode tamb[eé]m|parceiros|obrigado!|https?:\/\/)/i
+function summarize(desc = '') {
+  const keep = []
+  for (const p of desc.split(/\n\s*\n/)) {
+    if (BOILERPLATE.test(p)) break
+    keep.push(p)
+  }
+  let s = keep.join(' ').replace(/https?:\/\/\S+/g, '').replace(/\s+/g, ' ').trim()
+  if (s.length > 320) s = s.slice(0, 320).replace(/[\s,.;:!]+\S*$/, '') + '…'
+  return s
+}
+
+// Local = rota "sai de X, com destino a Y" ou o primeiro lugar conhecido (PLACES) no título/descrição
+const tidyPlace = (s) => s.replace(/\s+em\s+/i, ', ').trim()
+function placeOf(v) {
+  if (v.place) return v.place
+  const text = `${v.title} ${v.description || ''}`
+  const route = text.match(/\bsa[ií]u? (?:do bairro |da cidade )?(?:de|da|do) (.+?),? com destino (?:a|ao|à) (.+?)(?=,|\.|\n| passando)/i)
+  if (route) return `${tidyPlace(route[1])} → ${tidyPlace(route[2])}`
+  return PLACES.find((p) => p.re.test(text))?.label || ''
+}
+
+function renderMeta(video) {
+  const place = placeOf(video)
+  playerPlace.hidden = !place
+  playerPlace.lastElementChild.textContent = place
+  const summary = video.summary || summarize(video.description)
+  playerSummary.hidden = !summary
+  playerSummary.innerHTML = summary
+    ? `${escapeHtml(summary)} <a href="${watchUrl(video.id)}" target="_blank" rel="noopener">Ler mais no YouTube →</a>`
+    : ''
+  playerLike.href = watchUrl(video.id)
+  playerLike.setAttribute('aria-label', `Curtir no YouTube: ${video.title}`)
+}
+
+playerShare.addEventListener('click', async () => {
+  const data = { title: current.title, url: watchUrl(current.id) }
+  const label = $('span', playerShare)
+  try {
+    if (navigator.share) return await navigator.share(data)
+    await navigator.clipboard.writeText(data.url)
+    label.textContent = 'Link copiado!'
+  } catch (e) {
+    if (e?.name === 'AbortError') return
+    window.open(data.url, '_blank', 'noopener')
+  }
+  setTimeout(() => (label.textContent = 'Compartilhar'), 2000)
+})
+
 function selectVideo(video, { autoplay = false } = {}) {
   current = video
   playerTitle.textContent = video.title
   playerDate.textContent = formatDate(video.date)
+  renderMeta(video)
   autoplay ? playInline(video) : renderFacade(video)
   $$('.playlist button').forEach((b) => b.setAttribute('aria-current', String(b.dataset.id === video.id)))
 }
@@ -156,10 +213,12 @@ async function syncLatest() {
     const data = await res.json()
     const feed = data.videos || []
     const byId = new Map(videos.map((v) => [v.id, v]))
-    // Vídeos do acervo sem data ganham a data do feed, para a ordenação ficar correta
+    // Vídeos do acervo ganham a data (se faltar) e a descrição do feed
     feed.forEach((f) => {
       const v = byId.get(f.id)
-      if (v && !v.date) v.date = f.published
+      if (!v) return
+      if (!v.date) v.date = f.published
+      if (!v.description) v.description = f.description
     })
     const fresh = feed
       .filter((v) => !byId.has(v.id))
@@ -167,6 +226,7 @@ async function syncLatest() {
         id: v.id,
         title: cleanTitle(v.title),
         date: v.published,
+        description: v.description,
         isNew: true,
         tags: (() => {
           const tags = TAG_RULES.filter((r) => r.re.test(v.title + ' ' + v.description)).map((r) => r.tag)
@@ -177,6 +237,7 @@ async function syncLatest() {
     videos = [...fresh, ...videos].sort((a, b) => (b.date || '').localeCompare(a.date || ''))
     const playing = !!$('iframe', player)
     if (!playing) selectVideo(videos[0])
+    else renderMeta(current)
     renderPlaylist()
     sync.dataset.state = 'ok'
     sync.querySelector('b').textContent = fresh.length ? `${fresh.length} novo${fresh.length > 1 ? 's' : ''}` : 'atualizado'
