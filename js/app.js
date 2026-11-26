@@ -114,7 +114,15 @@ function renderMeta(video) {
     ? `${escapeHtml(summary)} <a href="${watchUrl(video.id)}" target="_blank" rel="noopener">Ler mais no YouTube →</a>`
     : ''
   playerLike.href = watchUrl(video.id)
-  playerLike.setAttribute('aria-label', `Curtir no YouTube: ${video.title}`)
+}
+
+// Rola até o player (descontando o header fixo) quando ele não estiver visível
+function scrollToPlayer() {
+  const headerH = $('.site-header')?.offsetHeight || 80
+  const rect = player.getBoundingClientRect()
+  if (rect.top >= headerH && rect.bottom <= window.innerHeight) return
+  const label = $('#midia .yt .panel-label')
+  window.scrollTo({ top: label.getBoundingClientRect().top + window.scrollY - headerH - 12, behavior: 'smooth' })
 }
 
 playerShare.addEventListener('click', async () => {
@@ -177,7 +185,9 @@ playlist.addEventListener('click', (e) => {
   const b = e.target.closest('button[data-id]')
   if (!b) return
   const v = videos.find((x) => x.id === b.dataset.id)
-  if (v) selectVideo(v, { autoplay: true })
+  if (!v) return
+  selectVideo(v, { autoplay: true })
+  scrollToPlayer()
 })
 
 // Experience cards -> filter the playlist
@@ -194,9 +204,7 @@ document.addEventListener('click', (e) => {
   if (!b) return
   const v = videos.find((x) => x.id === b.dataset.play) || { id: b.dataset.play, title: b.textContent.trim(), tags: [] }
   selectVideo(v, { autoplay: true })
-  const label = $('#midia .yt .panel-label')
-  const header = $('.site-header')?.offsetHeight || 80
-  window.scrollTo({ top: label.getBoundingClientRect().top + window.scrollY - header - 12, behavior: 'smooth' })
+  scrollToPlayer()
 })
 
 const cleanTitle = (t) =>

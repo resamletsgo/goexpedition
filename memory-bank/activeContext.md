@@ -1,6 +1,6 @@
 # Active context
 
-**Current focus**: player com local, data, resumo e botões Inscrever-se / Curtir / Compartilhar (sem API key, extração no navegador em `js/app.js`). Antes: CTA da Cicloviagem + card 06.
+**Current focus**: CTAs de venda por seção (mailto com assunto), player sem botão de like (só link honesto) e rolagem ao clicar na playlist.
 
 **In progress**:
 
