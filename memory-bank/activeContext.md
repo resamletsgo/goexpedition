@@ -1,6 +1,6 @@
 # Active context
 
-**Current focus**: chamada de contato na Cicloviagem + card 06 na grade de experiências (6 cards). Antes: player abrindo no vídeo mais recente.
+**Current focus**: player com local, data, resumo e botões Inscrever-se / Curtir / Compartilhar (sem API key, extração no navegador em `js/app.js`). Antes: CTA da Cicloviagem + card 06.
 
 **In progress**:
 

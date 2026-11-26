@@ -323,6 +323,15 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 .player-meta { padding: 1.1rem 0 1.4rem; border-bottom: 1px solid var(--line-light); margin-bottom: 1.2rem; }
 .player-meta h3 { font-family: var(--f-display); text-transform: uppercase; font-size: clamp(1.5rem, 2.6vw, 2.1rem); font-weight: 800; line-height: 1.02; }
 .player-meta p { margin: .4rem 0 0; color: rgba(239, 231, 214, .6); font-size: .88rem; }
+.player-meta .player-info { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .9rem; }
+.player-place { display: inline-flex; align-items: center; gap: .35rem; color: var(--sun); font-weight: 600; }
+.player-place[hidden] { display: none; }
+.player-place svg { width: 1em; height: 1em; flex: none; }
+.player-meta .player-summary { margin-top: .85rem; color: rgba(239, 231, 214, .85); font-size: .95rem; line-height: 1.55; max-width: 68ch; }
+.player-summary a { color: var(--sun); font-weight: 600; white-space: nowrap; margin-left: .3rem; }
+.player-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.btn-light { border-color: var(--line-light); color: var(--paper); background: transparent; font: inherit; font-weight: 700; font-size: .85rem; cursor: pointer; }
+.btn-light:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
 
 .chips, .ig-tabs { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 1rem; }
 .chips button, .ig-tabs button {
