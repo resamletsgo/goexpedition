@@ -4,7 +4,7 @@
 
 - Player com playlist filtrável, acervo em `js/data.js`, vídeos novos via `api/videos.json`.
 - Clique em vídeo da Cicloviagem toca no player principal e rola até ele.
-- Player mostra local (`placeOf()` + `PLACES` em `js/data.js`), data, resumo da descrição (`summarize()`) e botões Inscrever-se / Compartilhar + texto "Curtiu? Deixe seu 👍 lá no YouTube"; clique na playlist rola até o player (`scrollToPlayer()`).
+- Player mostra local (`placeOf()` + `PLACES` em `js/data.js`), data, resumo da descrição (`summarize()`) e botões Inscrever-se / Compartilhar + bloco de destaque `.player-like` com botão "Curtir no YouTube" (amarelo, pulsando) e texto de incentivo; clique na playlist rola até o player (`scrollToPlayer()`).
 
 **Not started / backlog**
 

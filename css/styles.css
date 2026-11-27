@@ -331,8 +331,19 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 .player-meta .player-summary { margin-top: .85rem; color: rgba(239, 231, 214, .85); font-size: .95rem; line-height: 1.55; max-width: 68ch; }
 .player-summary a { color: var(--sun); font-weight: 600; white-space: nowrap; margin-left: .3rem; }
 .player-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-top: 1rem; }
-.player-meta .player-like { margin: 0; font-size: .85rem; }
-.player-like a { color: var(--sun); font-weight: 600; }
+.player-like {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; margin-top: 1rem;
+  padding: .9rem 1rem; border: 1.5px dashed rgba(232, 178, 58, .55); border-radius: var(--radius);
+  background: rgba(232, 178, 58, .08);
+}
+.player-meta .player-like p { margin: 0; flex: 1 1 24ch; color: rgba(239, 231, 214, .85); font-size: .9rem; line-height: 1.45; }
+.player-like strong { color: var(--sun); }
+.btn-like { flex: none; font-size: 1rem; animation: like-pulse 2.4s var(--ease) infinite; }
+.btn-like svg { width: 1.25em; height: 1.25em; transform-origin: 30% 80%; }
+.btn-like:hover svg { animation: like-wiggle .5s var(--ease); }
+@keyframes like-pulse { 0%, 70%, 100% { box-shadow: 0 0 0 0 rgba(232, 178, 58, .55); } 35% { box-shadow: 0 0 0 10px rgba(232, 178, 58, 0); } }
+@keyframes like-wiggle { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-18deg) scale(1.15); } 60% { transform: rotate(8deg); } }
+@media (prefers-reduced-motion: reduce) { .btn-like, .btn-like:hover svg { animation: none; } }
 .btn-light { border-color: var(--line-light); color: var(--paper); background: transparent; font: inherit; font-weight: 700; font-size: .85rem; cursor: pointer; }
 .btn-light:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
 
@@ -477,12 +488,34 @@ em { font-family: var(--f-serif); font-style: italic; font-weight: 400; letter-s
 }
 .anjos-steps button:hover::before { background-color: var(--sun); transform: scale(1.1); }
 .anjos-steps span { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; color: var(--sun); letter-spacing: .06em; }
-.anjos-steps strong { font-weight: 600; font-size: .92rem; line-height: 1.3; }
+.anjos-steps strong { font-weight: 600; font-size: .92rem; line-height: 1.3; overflow-wrap: anywhere; hyphens: auto; }
+.anjos > * { min-width: 0; }
+/* Resumo em destaque */
+.anjos-resumo {
+  grid-column: 1 / -1; display: flex; align-items: center; gap: 1rem; width: 100%; text-align: left;
+  border: 2px solid var(--sun); border-radius: var(--radius); background: rgba(255, 255, 255, .04);
+  color: var(--paper); padding: 1rem 1.2rem; cursor: pointer; transition: background-color .25s, transform .25s var(--ease);
+}
+.anjos-resumo::before {
+  content: ''; flex: 0 0 56px; height: 56px; border-radius: 50%; background-color: var(--sun);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6v12l9-6z' fill='%231d211c'/%3E%3C/svg%3E");
+  background-size: 28px; background-repeat: no-repeat; background-position: center; transition: transform .25s var(--ease);
+}
+.anjos-resumo:hover { background: rgba(255, 255, 255, .1); }
+.anjos-resumo:hover::before { transform: scale(1.1); }
+.anjos-resumo span { display: block; font-family: var(--f-display); font-weight: 800; text-transform: uppercase; color: var(--sun); letter-spacing: .06em; font-size: .8rem; }
+.anjos-resumo strong { display: block; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(1.05rem, 2vw, 1.5rem); line-height: 1.05; margin-top: .25rem; }
 @media (min-width: 901px) {
   /* Uma linha só, qualquer que seja o número de etapas */
   .anjos-steps { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
   /* 6+ etapas: título em cima, etapas na largura toda */
   .anjos:has(.anjos-steps li:nth-child(6)) { grid-template-columns: 1fr; }
+  /* 7+ etapas: versão compacta para caber na largura */
+  .anjos-steps:has(li:nth-child(7)) { gap: .5rem; }
+  .anjos-steps:has(li:nth-child(7))::before { top: 18px; }
+  .anjos-steps:has(li:nth-child(7)) button::before { width: 36px; height: 36px; background-size: 18px; }
+  .anjos-steps:has(li:nth-child(7)) span { font-size: .78rem; letter-spacing: .04em; }
+  .anjos-steps:has(li:nth-child(7)) strong { font-size: .8rem; }
   /* Exatamente 5 etapas na coluna lateral: versão compacta */
   .anjos-steps:has(li:nth-child(5)):not(:has(li:nth-child(6))) { gap: .35rem; }
   .anjos-steps:has(li:nth-child(5)):not(:has(li:nth-child(6)))::before { top: 16px; }
