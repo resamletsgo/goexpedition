@@ -1,6 +1,6 @@
 # Active context
 
-**Current focus**: CTAs de venda por seção (mailto com assunto), player sem botão de like (só link honesto) e rolagem ao clicar na playlist.
+**Current focus**: CTAs de venda por seção (mailto com assunto), botão de like em destaque (abre o vídeo no YouTube) e rolagem ao clicar na playlist.
 
 **In progress**:
 
